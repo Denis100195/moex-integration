@@ -59,18 +59,15 @@ public class MoexDataService {
                         currSec.setMarketPrice3TradeValue(Double.parseDouble(reader.getAttributeValue(17)));
                         currSec.setAdmittedValue(Double.parseDouble(reader.getAttributeValue(18)));
                         currSec.setWaval(Double.parseDouble(reader.getAttributeValue(19)));
-
                     }
                     break;
                 case XMLStreamConstants.CHARACTERS:
                     tagContent = reader.getText().trim();
                     break;
 
-
                 case XMLStreamConstants.START_DOCUMENT:
                     securityList = new ArrayList<>();
                     break;
-
             }
         }
         for (Security security: securityList){
