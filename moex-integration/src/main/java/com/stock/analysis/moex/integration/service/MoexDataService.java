@@ -1,6 +1,7 @@
 package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.dto.Security;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.xml.stream.XMLInputFactory;
@@ -12,11 +13,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// TODO над классом навесить аннотацию @Slf4j - это тоже lombok,
+//  позволяет избавиться от конструкции Logger logger = Logger.getLogger(MoexDataService.class);
+// поищи уроки про логгирование в java, про slf4j и logback
 @Service
 public class MoexDataService {
 
     public List<Security> parseDoc(LocalDate date) throws Exception {
+        // TODO url давай с датой вернем, нужно на определенную дату данные получать, в конце ?date=2020-03-17
+        //  ну и передавать туда date.toString() -
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml")
                         .toURL().openStream();
@@ -36,6 +41,7 @@ public class MoexDataService {
                         securityList = new ArrayList<>();
                     }
                     if ("row".equals(reader.getLocalName())) {
+                        // TODO тут лучше использовать builder
                         currSec = new Security();
                         currSec.setBoardId(reader.getAttributeValue(0));
                         currSec.setTradeDate(LocalDate.parse(reader.getAttributeValue(1)));

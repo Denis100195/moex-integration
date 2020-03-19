@@ -16,11 +16,14 @@ public class Security {
     private LocalDate tradeDate;
     private String shortName;
     private String secId;
-    private double numTrades;
+    private double numTrades; //TODO вместо double лучше использовать BigDecimal. Короче никогда double не используй
+    // вот две статьи с примерами, почему это плохо
+    // https://computingat40s.wordpress.com/java-float-and-double-primitive-types-are-evil-dont-use-them/
+    // https://stackoverflow.com/questions/3730019/why-not-use-double-or-float-to-represent-currency
     private double value;
     private double open;
     private double low;
-    private double hight;
+    private double hight; // TODO high
     private double legalClosePrice;
     private double waPrice;
     private double close;
@@ -31,6 +34,9 @@ public class Security {
     private double marketPrice3TradeValue;
     private double admittedValue;
     private double waval;
+
+    // TODO тут геттеры и сеттеры не нужны, lombok ведь используем
+    // TODO почитай эту статью https://habr.com/ru/post/345520/
 
     public String getBoardId() {
         return boardId;
