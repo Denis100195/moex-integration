@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class MoexDataService {
     public List<Security> parseDoc(LocalDate date) throws Exception {
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml")
-                .toURL().openStream();
+                        .toURL().openStream();
         List<Security> securityList = null;
         Security currSec = null;
         String tagContent = null;
@@ -29,15 +27,15 @@ public class MoexDataService {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader reader = factory.createXMLStreamReader(stream);
 
-        while (reader.hasNext()){
+        while (reader.hasNext()) {
             int event = reader.next();
 
-            switch (event){
+            switch (event) {
                 case XMLStreamConstants.START_ELEMENT:
-                    if ("rows".equals(reader.getLocalName())){
+                    if ("rows".equals(reader.getLocalName())) {
                         securityList = new ArrayList<>();
                     }
-                    if ("row".equals(reader.getLocalName())){
+                    if ("row".equals(reader.getLocalName())) {
                         currSec = new Security();
                         currSec.setBoardId(reader.getAttributeValue(0));
                         currSec.setTradeDate(LocalDate.parse(reader.getAttributeValue(1)));
@@ -70,7 +68,7 @@ public class MoexDataService {
                     break;
             }
         }
-        for (Security security: securityList){
+        for (Security security : securityList) {
             System.out.println(security);
         }
         return securityList;
