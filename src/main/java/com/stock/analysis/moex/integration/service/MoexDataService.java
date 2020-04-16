@@ -13,11 +13,8 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-// TODO над классом навесить аннотацию @Slf4j - это тоже lombok,
-//  позволяет избавиться от конструкции Logger logger = Logger.getLogger(MoexDataService.class);
-// поищи уроки про логгирование в java, про slf4j и logback
 
 @Service
 @Slf4j
@@ -34,11 +31,12 @@ public class MoexDataService {
 
         while (reader.hasNext()) {
             int event = reader.next();
+
             if (event == XMLStreamConstants.START_ELEMENT && "row".equals(reader.getLocalName())) {
 
                 Security currSec = Security.builder()
                         .boardId(reader.getAttributeValue(0))
-                        .tradeDate(LocalDate.parse(reader.getAttributeValue(1)))
+                        .tradeDate(new Date(reader.getAttributeValue(1)))
                         .shortName(reader.getAttributeValue(2))
                         .secId(reader.getAttributeValue(3))
                         .numTrades(NumberUtils.isCreatable(reader.getAttributeValue(4)) ? new BigDecimal(reader.getAttributeValue(4)) : null)
