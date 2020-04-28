@@ -25,13 +25,13 @@ public class SecurityRepository {
     }
 
 
-    private static final String SELECT_FROM_DB = "select * from security";
+    private static final String SELECT_FROM_DB = "select * from security where trade_date = ?";
     private static final String INSERT_INTO_DB = "INSERT INTO security values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    private RowMapper<Security> securityRowMapper = (resultSet, i) -> {
-        return new Security(
+    private RowMapper<Security> securityRowMapper = (resultSet, i) ->
+         new Security(
                 resultSet.getString("board_id"),
-                resultSet.getDate("trade_date"),
+                resultSet.getTimestamp("trade_date").toLocalDateTime().toLocalDate(),
                 resultSet.getString("short_name"),
                 resultSet.getString("sec_id"),
                 resultSet.getBigDecimal("num_trades"),
@@ -50,92 +50,40 @@ public class SecurityRepository {
                 resultSet.getBigDecimal("market_price_3_trade_value"),
                 resultSet.getBigDecimal("admitted_value"),
                 resultSet.getBigDecimal("waval"));
-    };
+
 
     @Transactional
-    public List<Security> findAll(){
-        return jdbcTemplate.query(SELECT_FROM_DB, securityRowMapper);
+    public List<Security> findAllByDate(LocalDate date){
+        return jdbcTemplate.query(SELECT_FROM_DB, securityRowMapper, date);
     }
-
-//    @Transactional
-//    public List<String> getRows(){
-        //return jdbcTemplate.query(SELECT_FROM_DB)
-
-
-//                new RowMapper<String>() {
-//            @Override
-//            public String mapRow(ResultSet resultSet, int i) throws SQLException {
-//                resultSet.getString("board_id");
-//                resultSet.getDate("trade_date");
-//                resultSet.getString("short_name");
-//                resultSet.getString("sec_id");
-//                resultSet.getBigDecimal("num_trades");
-//                resultSet.getBigDecimal("value");
-//                resultSet.getBigDecimal("open");
-//                resultSet.getBigDecimal("low");
-//                resultSet.getBigDecimal("high");
-//                resultSet.getBigDecimal("legal_close_price");
-//                resultSet.getBigDecimal("wa_price");
-//                resultSet.getBigDecimal("close");
-//                resultSet.getBigDecimal("volume");
-//                resultSet.getBigDecimal("market_price_2");
-//                resultSet.getBigDecimal("market_price_3");
-//                resultSet.getBigDecimal("admitted_qoute");
-//                resultSet.getBigDecimal("vmp_2_val_trd");
-//                resultSet.getBigDecimal("market_price_3_trade_value");
-//                resultSet.getBigDecimal("admitted_value");
-//                resultSet.getBigDecimal("waval");
-//                resultSet.getBigDecimal("market_price");
-//                resultSet.getBigDecimal("market_price");
-//
-//                return ;
-//            }
-//            });
-
-//    }
 
     @Transactional
-    public void insRow(String boardId, LocalDate tradeDate, String shortName, String secId,
-                       BigDecimal numTrades, BigDecimal value, BigDecimal open, BigDecimal low,
-                       BigDecimal high, BigDecimal legalClosePrice, BigDecimal waPrice,
-                       BigDecimal close, BigDecimal volume, BigDecimal marketPrice2,
-                       BigDecimal marketPrice3, BigDecimal admittedQoute, BigDecimal mp2ValTrd,
-                       BigDecimal marketPrice3TradeValue, BigDecimal admittedValue, BigDecimal waval){
-        jdbcTemplate.update(INSERT_INTO_DB, getParams(boardId, tradeDate, shortName, secId,
-                numTrades, value, open, low, high, legalClosePrice, waPrice, close, volume,
-                marketPrice2, marketPrice3, admittedQoute, mp2ValTrd, marketPrice3TradeValue,
-                admittedValue, waval));
+    public void insRow(Security security){
+        jdbcTemplate.update(INSERT_INTO_DB, getParams(security));
     }
 
-    private Object[] getParams(String boardId,
-            LocalDate tradeDate, String shortName, String secId,
-            BigDecimal numTrades, BigDecimal value, BigDecimal open,
-            BigDecimal low, BigDecimal high, BigDecimal legalClosePrice,
-            BigDecimal waPrice, BigDecimal close, BigDecimal volume,
-            BigDecimal marketPrice2, BigDecimal marketPrice3, BigDecimal admittedQoute,
-            BigDecimal mp2ValTrd, BigDecimal marketPrice3TradeValue,
-            BigDecimal admittedValue, BigDecimal waval){
+    private Object[] getParams(Security security){
         Object[] params = new Object[20];
-        params[0] = boardId;
-        params[1] = tradeDate;
-        params[2] = shortName;
-        params[3] = secId;
-        params[4] = numTrades;
-        params[5] = value;
-        params[6] = open;
-        params[7] = low;
-        params[8] = high;
-        params[9] = legalClosePrice;
-        params[10] = waPrice;
-        params[11] = close;
-        params[12] = volume;
-        params[13] = marketPrice2;
-        params[14] = marketPrice3;
-        params[15] = admittedQoute;
-        params[16] = mp2ValTrd;
-        params[17] = marketPrice3TradeValue;
-        params[18] = admittedValue;
-        params[19] = waval;
+        params[0] = security.getBoardId();
+        params[1] = security.getTradeDate();
+        params[2] = security.getShortName();
+        params[3] = security.getSecId();
+        params[4] = security.getNumTrades();
+        params[5] = security.getValue();
+        params[6] = security.getOpen();
+        params[7] = security.getLow();
+        params[8] = security.getHigh();
+        params[9] = security.getLegalClosePrice();
+        params[10] = security.getWaPrice();
+        params[11] = security.getClose();
+        params[12] = security.getVolume();
+        params[13] = security.getMarketPrice2();
+        params[14] = security.getMarketPrice3();
+        params[15] = security.getAdmittedQoute();
+        params[16] = security.getMp2ValTrd();
+        params[17] = security.getMarketPrice3TradeValue();
+        params[18] = security.getAdmittedValue();
+        params[19] = security.getWaval();
 
         return params;
     }
@@ -146,9 +94,7 @@ public class SecurityRepository {
 /*прокси в спринге что это
 * @Transactional что это
 *
-* сделать инсерт в нормальную таблицу для секьюрити (создать ее)
-* создать тест который делает запись в таблицу
-* создать объект секьюрити в тесте (заполнить своими значениями) и сохранить его в бд
+*
 * 
 *
 * */

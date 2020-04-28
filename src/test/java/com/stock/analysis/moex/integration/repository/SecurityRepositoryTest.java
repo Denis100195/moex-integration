@@ -19,31 +19,9 @@ public class SecurityRepositoryTest {
 
     @Test
     public void testGetRows() {
-        List<Security> securityList = securityRepository.findAll();
+        List<Security> securityList = securityRepository.findAllByDate(LocalDate.of(2020, 1, 16));
         Assert.assertFalse(securityList.isEmpty());
     }
 
-    @Test
-    public void testInsRow(){
-        securityRepository.insRow("TQBR",
-                LocalDate.parse("2020-03-20"),
-                "АбрауДюрсо",
-                "ABRD",
-                new BigDecimal("156.0"),
-                new BigDecimal("475165.0"),
-                new BigDecimal("120.5"),
-                new BigDecimal("116.5"),
-                new BigDecimal("129.5"),
-                new BigDecimal("125.5"),
-                new BigDecimal("124.0"),
-                new BigDecimal("124.0"),
-                new BigDecimal("3830.0"),
-                new BigDecimal("0.0"),
-                new BigDecimal("124.0"),
-                new BigDecimal("125.5"),
-                new BigDecimal("0.0"),
-                new BigDecimal("503060"),
-                new BigDecimal("0.0"),
-                new BigDecimal("0.0"));
-    }
+
 }

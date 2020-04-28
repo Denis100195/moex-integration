@@ -5,18 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Security {
-    @Id
+
     private String boardId;
-    private Date tradeDate;
+    private LocalDate tradeDate;
     private String shortName;
     private String secId;
     private BigDecimal numTrades;

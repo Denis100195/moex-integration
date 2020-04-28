@@ -1,16 +1,22 @@
 package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.dto.Security;
+import com.stock.analysis.moex.integration.repository.SecurityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,13 +25,11 @@ import java.util.List;
 @Service
 @Slf4j
 public class MoexDataService {
-    public List<Security> parseDoc(LocalDate date) throws Exception {
+    public static List<Security> parseDoc(LocalDate date) throws Exception {
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=" + date.toString())
                         .toURL().openStream();
         List<Security> securityList = new ArrayList<>();
-
-
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader reader = factory.createXMLStreamReader(stream);
 
@@ -36,7 +40,7 @@ public class MoexDataService {
 
                 Security currSec = Security.builder()
                         .boardId(reader.getAttributeValue(0))
-                        .tradeDate(new Date(reader.getAttributeValue(1)))
+                        .tradeDate(LocalDate.parse(reader.getAttributeValue(1)))
                         .shortName(reader.getAttributeValue(2))
                         .secId(reader.getAttributeValue(3))
                         .numTrades(NumberUtils.isCreatable(reader.getAttributeValue(4)) ? new BigDecimal(reader.getAttributeValue(4)) : null)
@@ -67,5 +71,28 @@ public class MoexDataService {
         return securityList;
     }
 
+    // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
+
+    @Autowired
+    SecurityRepository securityRepository;
+    @Transactional
+    public void putSecurity (LocalDate date){
+        try{
+            for (int i = 0; i < parseDoc(date).size(); i++){
+            securityRepository.insRow(parseDoc(date).get(i));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    // 2. @Scheduled вторник-суббота
+
+    // 3. метод котор возращает даннные из базы на определенную дату
+    public List<Security> returnSecurity(LocalDate date){
+        return securityRepository.findAllByDate(date);
+    }
+    // 4. метод который возвращает данные по одной бумаге
 
 }
