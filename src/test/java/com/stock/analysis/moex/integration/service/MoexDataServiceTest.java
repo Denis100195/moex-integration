@@ -19,10 +19,11 @@ public class MoexDataServiceTest {
         List<Security> securityList = moexDataService.parseDoc(LocalDate.of(2020, 3, 20));
         System.out.println();
     }
+    @org.junit.Test
     public void testPutSecurity(){
         moexDataService.putSecurity(LocalDate.of(2020, 3, 20));
     }
-
+    @org.junit.Test
     public void testReturnSecurity(){
         List<Security> securityList = moexDataService.returnSecurity(LocalDate.of(2020, 3, 20));
         System.out.println(securityList);

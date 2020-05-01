@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class MoexDataService {
-    public static List<Security> parseDoc(LocalDate date) throws Exception {
+    public List<Security> parseDoc(LocalDate date) throws Exception {
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=" + date.toString())
                         .toURL().openStream();
@@ -79,7 +79,7 @@ public class MoexDataService {
     public void putSecurity (LocalDate date){
         try{
             for (int i = 0; i < parseDoc(date).size(); i++){
-            securityRepository.insRow(parseDoc(date).get(i));
+                securityRepository.insRow(parseDoc(date).get(i));
             }
         }catch (Exception e){
             e.printStackTrace();

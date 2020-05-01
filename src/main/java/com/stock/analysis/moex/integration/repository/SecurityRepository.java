@@ -25,7 +25,7 @@ public class SecurityRepository {
     }
 
 
-    private static final String SELECT_FROM_DB = "select * from security where trade_date = ?";
+    private static final String SELECT_SECURITY_BY_DATE = "select * from security where trade_date = ?";
     private static final String INSERT_INTO_DB = "INSERT INTO security values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private RowMapper<Security> securityRowMapper = (resultSet, i) ->
@@ -54,7 +54,7 @@ public class SecurityRepository {
 
     @Transactional
     public List<Security> findAllByDate(LocalDate date){
-        return jdbcTemplate.query(SELECT_FROM_DB, securityRowMapper, date);
+        return jdbcTemplate.query(SELECT_SECURITY_BY_DATE, securityRowMapper, date);
     }
 
     @Transactional
