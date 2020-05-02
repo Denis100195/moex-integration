@@ -86,13 +86,20 @@ public class MoexDataService {
         }
 
     }
-
     // 2. @Scheduled вторник-суббота
 
     // 3. метод котор возращает даннные из базы на определенную дату
     public List<Security> returnSecurity(LocalDate date){
         return securityRepository.findAllByDate(date);
     }
+
     // 4. метод который возвращает данные по одной бумаге
+    public Security getOneSecurity(LocalDate date, String shName){
+        for(int i = 0; i < returnSecurity(date).size(); i++){
+            if(returnSecurity(date).get(i).getShortName().equals(shName)){
+                return
+            }
+        }
+    }
 
 }
