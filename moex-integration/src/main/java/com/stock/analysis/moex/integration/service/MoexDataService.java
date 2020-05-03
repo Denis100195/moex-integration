@@ -94,10 +94,10 @@ public class MoexDataService {
     }
 
     // 4. метод который возвращает данные по одной бумаге
-    public Security getOneSecurity(LocalDate date, String shName){
+    public Security getOneSecurity(LocalDate date, String secId){
         Security oneSec = new Security();
         for(int i = 0; i < returnSecurity(date).size(); i++){
-            if(returnSecurity(date).get(i).getShortName().equals(shName)){
+            if(returnSecurity(date).get(i).getSecId().equals(secId)){
                 oneSec = returnSecurity(date).get(i);
             }
         }

@@ -28,4 +28,9 @@ public class MoexDataServiceTest {
         List<Security> securityList = moexDataService.returnSecurity(LocalDate.of(2020, 3, 20));
         System.out.println(securityList);
     }
+    @org.junit.Test
+    public void testReturnOneSec(){
+        Security oneSec = moexDataService.getOneSecurity(LocalDate.of(2020,3,20), "AFLT");
+        System.out.println(oneSec.toString());
+    }
 }
