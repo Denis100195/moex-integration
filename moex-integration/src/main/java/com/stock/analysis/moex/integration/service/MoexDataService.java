@@ -76,6 +76,7 @@ public class MoexDataService {
     @Autowired
     SecurityRepository securityRepository;
     @Transactional
+    @Scheduled(cron = "0 0 12 * * TUE-SAT")
     public void putSecurity (LocalDate date){
         try{
             for (int i = 0; i < parseDoc(date).size(); i++){

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Security {
-
+    private long id;
     private String boardId;
     private LocalDate tradeDate;
     private String shortName;
