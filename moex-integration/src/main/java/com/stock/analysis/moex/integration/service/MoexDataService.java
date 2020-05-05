@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class MoexDataService {
-    public static List<Security> parseDoc(LocalDate date) throws Exception {
+    public List<Security> parseDoc(LocalDate date) throws Exception {
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=" + date.toString())
                         .toURL().openStream();
@@ -79,20 +79,29 @@ public class MoexDataService {
     public void putSecurity (LocalDate date){
         try{
             for (int i = 0; i < parseDoc(date).size(); i++){
-            securityRepository.insRow(parseDoc(date).get(i));
+                securityRepository.insRow(parseDoc(date).get(i));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
-
     // 2. @Scheduled вторник-суббота
 
     // 3. метод котор возращает даннные из базы на определенную дату
     public List<Security> returnSecurity(LocalDate date){
         return securityRepository.findAllByDate(date);
     }
+
     // 4. метод который возвращает данные по одной бумаге
+    public Security getOneSecurity(LocalDate date, String shName){
+        Security oneSec = new Security();
+        for(int i = 0; i < returnSecurity(date).size(); i++){
+            if(returnSecurity(date).get(i).getShortName().equals(shName)){
+                oneSec = returnSecurity(date).get(i);
+            }
+        }
+    return oneSec;
+    }
 
 }
