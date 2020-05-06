@@ -12,19 +12,22 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
 @Slf4j
 public class MoexDataService {
+
+    private SecurityRepository securityRepository;
+
+    public MoexDataService(SecurityRepository securityRepository){
+        this.securityRepository = securityRepository;
+    }
     public List<Security> parseDoc(LocalDate date) throws Exception {
         InputStream stream =
                 URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=" + date.toString())
@@ -63,7 +66,7 @@ public class MoexDataService {
 
                 securityList.add(currSec);
             }
-            if (event == XMLStreamConstants.END_ELEMENT && "rows".equals(reader.getLocalName())){
+            if (event == XMLStreamConstants.END_ELEMENT && "rows".equals(reader.getLocalName())) {
                 return securityList;
             }
         }
@@ -75,18 +78,20 @@ public class MoexDataService {
 
     // FIXME репозиторий неприватный, нарушена инкапсуляция, к нему можно получить доступ из другого класса.
     //  Надо сделать DI через конструктор, как в репозитории
-    @Autowired
-    SecurityRepository securityRepository;
+
+
+
     @Transactional
-    @Scheduled(cron = "0 0 12 * * TUE-SAT")
-    public void putSecurity (LocalDate date){
-        try{
+    @Scheduled(cron = "0 0 12 ? ? TUE-SAT")
+    public void putSecurity(LocalDate date) {
+        try {
             // FIXME сколько раз вызывается parseDoc(date)?
             // Попробуй подебажить, понять что тут происходит и где ошибка
-            for (int i = 0; i < parseDoc(date).size(); i++){
-                securityRepository.insRow(parseDoc(date).get(i));
+            List<Security> sl = parseDoc(date);
+            for (int i = 0; i < sl.size(); i++) {
+                securityRepository.insRow(sl.get(i));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -94,21 +99,14 @@ public class MoexDataService {
     // 2. @Scheduled вторник-суббота
 
     // 3. метод котор возращает даннные из базы на определенную дату
-    public List<Security> returnSecurity(LocalDate date){
+    public List<Security> returnSecurity(LocalDate date) {
         return securityRepository.findAllByDate(date);
     }
 
     // 4. метод который возвращает данные по одной бумаге
-    public Security getOneSecurity(LocalDate date, String shName){
-        Security oneSec = new Security();
-        for(int i = 0; i < returnSecurity(date).size(); i++){
-            // FIXME сколько раз вызывается returnSecurity(date)? Вообще надо через sql искать.
-            //  Если будет много запросов, то что, постоянно надо будет выгружать данные из базы и потом искать из выгруженных
-            if(returnSecurity(date).get(i).getShortName().equals(shName)){
-                oneSec = returnSecurity(date).get(i);
-            }
-        }
-    return oneSec;
+    public Security getOneSecurity(LocalDate date, String shName) {
+        List<Security> secList = securityRepository.findOneSecurity(date, shName);
+        return secList.get(0);
     }
 
 }

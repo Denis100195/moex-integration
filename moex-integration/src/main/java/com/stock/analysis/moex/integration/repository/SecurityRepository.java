@@ -26,7 +26,8 @@ public class SecurityRepository {
 
 
     private static final String SELECT_SECURITY_BY_DATE = "select * from security where trade_date = ?";
-    private static final String INSERT_INTO_DB = "INSERT INTO security values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_SECURITY_INTO_DB = "INSERT INTO security values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_ONE_SECURITY = "select * from security where trade_date = ? and short_name = ?";
 
     private RowMapper<Security> securityRowMapper = (resultSet, i) ->
          new Security(
@@ -56,10 +57,14 @@ public class SecurityRepository {
     public List<Security> findAllByDate(LocalDate date){
         return jdbcTemplate.query(SELECT_SECURITY_BY_DATE, securityRowMapper, date);
     }
+    @Transactional
+    public List<Security> findOneSecurity(LocalDate date, String name){
+        return jdbcTemplate.query(SELECT_ONE_SECURITY,securityRowMapper, date, name);
+    }
 
     @Transactional
     public void insRow(Security security){
-        jdbcTemplate.update(INSERT_INTO_DB, getParams(security));
+        jdbcTemplate.update(INSERT_SECURITY_INTO_DB, getParams(security));
     }
 
     private Object[] getParams(Security security){

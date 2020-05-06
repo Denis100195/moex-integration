@@ -7,15 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bussiness-day-calendar-api" />
         <module name="moex-integration" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bussiness-day-calendar-api" target="1.8" />
       <module name="moex-integration" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bussiness-day-calendar-api" options="-parameters" />
       <module name="moex-integration" options="-parameters" />
     </option>
   </component>
