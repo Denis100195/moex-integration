@@ -76,17 +76,10 @@ public class MoexDataService {
 
     // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
 
-    // FIXME репозиторий неприватный, нарушена инкапсуляция, к нему можно получить доступ из другого класса.
-    //  Надо сделать DI через конструктор, как в репозитории
-
-
-
     @Transactional
     @Scheduled(cron = "0 0 12 ? ? TUE-SAT")
     public void putSecurity(LocalDate date) {
         try {
-            // FIXME сколько раз вызывается parseDoc(date)?
-            // Попробуй подебажить, понять что тут происходит и где ошибка
             List<Security> sl = parseDoc(date);
             for (int i = 0; i < sl.size(); i++) {
                 securityRepository.insRow(sl.get(i));
