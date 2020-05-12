@@ -3,7 +3,9 @@ package com.stock.analysis.moex.integration.service;
 import com.stock.analysis.moex.integration.dto.Security;
 import com.stock.analysis.moex.integration.repository.SecurityRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -70,36 +72,44 @@ public class MoexDataService {
                 return securityList;
             }
         }
-        securityList.forEach(System.out::println);
+
         return securityList;
     }
 
     // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
 
     @Transactional
-    @Scheduled(cron = "0 0 12 ? ? TUE-SAT")
-    public void putSecurity(LocalDate date) {
+    @Scheduled(cron = "0 03 21 * * TUE-SAT")
+    public void putSecurity() {
         try {
-            List<Security> sl = parseDoc(date);
+            log.info("Метод");
+            List<Security> sl = parseDoc(LocalDate.now().minusDays(5));
             for (int i = 0; i < sl.size(); i++) {
                 securityRepository.insRow(sl.get(i));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Ошибка в методе putSecurity {}", ExceptionUtils.getStackTrace(e));
         }
 
     }
     // 2. @Scheduled вторник-суббота
 
     // 3. метод котор возращает даннные из базы на определенную дату
-    public List<Security> returnSecurity(LocalDate date) {
-        return securityRepository.findAllByDate(date);
+    public List<Security> getSecurityDataOnDate(LocalDate date) {
+        return securityRepository.findAllSecurityDataByDate(date);
     }
 
     // 4. метод который возвращает данные по одной бумаге
-    public Security getOneSecurity(LocalDate date, String shName) {
-        List<Security> secList = securityRepository.findOneSecurity(date, shName);
-        return secList.get(0);
+    public Security getOneSecurityByNameOnDate(LocalDate date, String shName) {
+        Security sec = securityRepository.findOneSecurityByNameOnDate(date, shName);
+        return sec;
     }
 
 }
+
+//установить postman для запросов
+//soap UI
+
+//контроллер
+//поднять локально бизнес календарь. через постман сделать к нему запросы.
+//вынести cron в проперти отдельной переменной
