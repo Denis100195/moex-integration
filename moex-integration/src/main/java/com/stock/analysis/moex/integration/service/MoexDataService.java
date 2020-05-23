@@ -79,11 +79,11 @@ public class MoexDataService {
     // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
 
     @Transactional
-    @Scheduled(cron = "0 03 21 * * TUE-SAT")
+    @Scheduled(cron = "0 11 15 * * TUE-SAT")
     public void putSecurity() {
         try {
             log.info("Метод");
-            List<Security> sl = parseDoc(LocalDate.now().minusDays(5));
+            List<Security> sl = parseDoc(LocalDate.now().minusDays(1));
             for (int i = 0; i < sl.size(); i++) {
                 securityRepository.insRow(sl.get(i));
             }
