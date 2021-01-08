@@ -16,21 +16,22 @@ public class MoexDataServiceTest {
     private MoexDataService moexDataService;
     @org.junit.Test
     public void testParseDoc() throws Exception {
-        List<Security> securityList = moexDataService.parseDoc(LocalDate.of(2020, 3, 20));
+        List<Security> securityList = moexDataService.getSecuritiesOnDateFromMoex(LocalDate.of(2020, 3, 20));
         System.out.println();
     }
-//    @org.junit.Test
-//    public void testPutSecurity(){
-//        moexDataService.putSecurity(LocalDate.of(2020, 3, 20));
-//    }
-//    @org.junit.Test
-//    public void testReturnSecurity(){
-//        List<Security> securityList = moexDataService.returnSecurity(LocalDate.of(2020, 3, 20));
-//        System.out.println(securityList);
-//    }
-//    @org.junit.Test
-//    public void testReturnOneSec(){
-//        Security oneSec = moexDataService.getOneSecurity(LocalDate.of(2020,3,20), "AFLT");
-//        System.out.println(oneSec.toString());
-//    }
+    @org.junit.Test
+    public void testPutSecurity(){
+        Security security = Security.builder().boardId("mcd").build();
+        moexDataService.saveSecuritiesOnPreviousWorkingDate();
+    }
+    @org.junit.Test
+    public void testReturnSecurity(){
+        List<Security> securityList = moexDataService.getSecurityDataOnDate(LocalDate.of(2020, 3, 20));
+        System.out.println(securityList);
+    }
+    @org.junit.Test
+    public void testReturnOneSec(){
+        Security oneSec = moexDataService.getOneSecurityByNameOnDate(LocalDate.of(2020,3,20), "AFLT");
+        System.out.println(oneSec.toString());
+    }
 }

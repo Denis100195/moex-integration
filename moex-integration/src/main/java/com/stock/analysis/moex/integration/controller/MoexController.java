@@ -18,14 +18,14 @@ public class MoexController {
         this.moexDataService = moexDataService;
     }
 
-    @GetMapping(value = "/getAllSecOnDate")
-    public List<Security> getAllSecOnDate (@RequestParam(name = "date")LocalDate date){
-        return moexDataService.getSecurityDataOnDate(date);
+    @GetMapping(value = "/security")
+    public List<Security> getAllSecOnDate (@RequestParam(name = "date")String date){
+        return moexDataService.getSecurityDataOnDate(LocalDate.parse(date));
     }
 
     @GetMapping(value = "/getOneSecByNameOnDate")
-    public Security getOneSecByNameOnDate(@RequestParam(name = "date")LocalDate date,
+    public Security getOneSecByNameOnDate(@RequestParam(name = "date")String date,
                                           @RequestParam(name = "secName")String secName){
-        return moexDataService.getOneSecurityByNameOnDate(date, secName);
+        return moexDataService.getOneSecurityByNameOnDate(LocalDate.parse(date), secName);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@EnableAutoConfiguration
+
 public class BusinessDayCalendarApp {
 
     public static void main(String[] args) {

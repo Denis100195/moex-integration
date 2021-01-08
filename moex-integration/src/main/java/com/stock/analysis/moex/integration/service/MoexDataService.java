@@ -1,12 +1,13 @@
 package com.stock.analysis.moex.integration.service;
 
+import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
 import com.stock.analysis.moex.integration.dto.Security;
 import com.stock.analysis.moex.integration.repository.SecurityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +20,28 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class MoexDataService {
 
+    final static String RUSSIA_CODE = "RUS"; //todo вынести в класс констант
+    private BusinessCalendarClient businessCalendarClient;
     private SecurityRepository securityRepository;
+    @Value("${moex.service.url}")
+    private String moexServiceUrl;
 
+    @Autowired
     public MoexDataService(SecurityRepository securityRepository){
         this.securityRepository = securityRepository;
     }
-    public List<Security> parseDoc(LocalDate date) throws Exception {
+
+    public List<Security> getSecuritiesOnDateFromMoex(LocalDate date) throws Exception {
         InputStream stream =
-                URI.create("http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date=" + date.toString())
+                URI.create(moexServiceUrl + date.toString())
                         .toURL().openStream();
         List<Security> securityList = new ArrayList<>();
         XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -79,11 +88,11 @@ public class MoexDataService {
     // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
 
     @Transactional
-    @Scheduled(cron = "0 11 15 * * TUE-SAT")
-    public void putSecurity() {
+    @Scheduled(cron = "${cron}")
+    public void saveSecuritiesOnPreviousWorkingDate() {
         try {
             log.info("Метод");
-            List<Security> sl = parseDoc(LocalDate.now().minusDays(1));
+            List<Security> sl = getSecuritiesOnDateFromMoex(LocalDate.now().minusDays(1));
             for (int i = 0; i < sl.size(); i++) {
                 securityRepository.insRow(sl.get(i));
             }
@@ -92,6 +101,19 @@ public class MoexDataService {
         }
 
     }
+    //1. Создать метод, который сохраняет данные с сайта в базу на дату, переданную в параметры
+    public void saveSecuritiesOnDate(LocalDate date) throws Exception{
+        List<Security> secOnDate = getSecuritiesOnDateFromMoex(date);
+        for (int i = 0; i < secOnDate.size(); i++) {
+            securityRepository.insRow(secOnDate.get(i));
+        }
+    }
+    @Scheduled(cron = "${cron}")
+    public void addSecOnPrevWorkDay() throws Exception{
+        LocalDate workDay = businessCalendarClient.getPreviousWorkingDate(LocalDate.now(), RUSSIA_CODE);
+        saveSecuritiesOnDate(workDay);
+    }
+
     // 2. @Scheduled вторник-суббота
 
     // 3. метод котор возращает даннные из базы на определенную дату
@@ -99,11 +121,28 @@ public class MoexDataService {
         return securityRepository.findAllSecurityDataByDate(date);
     }
 
+    public List<Security> getTopSecurity(final LocalDate date){
+        return getSecurityDataOnDate(date)
+                .stream()
+                .filter(security -> security.getHigh().compareTo(BigDecimal.valueOf(200)) > 0)
+                .sorted(Comparator.comparing(Security::getHigh))
+                .limit(10)
+                .collect(Collectors.toList());
+
+
+    }
+    // на его основе вывести топ 10 бумаг с максимальным объемом, у которых цена (high) больше 200. с использ стримов
+    // поднять первое прилож и сделать в него rest запрос. созд директ client. созд класс.
+    //
+    // вынести URL в проперти. @value
+
     // 4. метод который возвращает данные по одной бумаге
     public Security getOneSecurityByNameOnDate(LocalDate date, String shName) {
         Security sec = securityRepository.findOneSecurityByNameOnDate(date, shName);
         return sec;
     }
+
+
 
 }
 
