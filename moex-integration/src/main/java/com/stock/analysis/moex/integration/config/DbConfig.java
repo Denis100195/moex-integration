@@ -17,18 +17,17 @@ import javax.sql.DataSource;
 public class DbConfig {
     @Bean(name = "hikariDS")
     @ConfigurationProperties("postgres.hikari")
-    public HikariDataSource getHikariDataSource(){
+    public HikariDataSource getHikariDataSource() {
         return DataSourceBuilder.create()
                 .type(HikariDataSource.class)
                 .build();
     }
+
     @Bean(name = "trManager")
     @Autowired
     public DataSourceTransactionManager transactionManager(@Qualifier("hikariDS") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-
-
 
 
 }

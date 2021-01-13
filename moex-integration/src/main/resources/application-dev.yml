@@ -1,0 +1,10 @@
+postgres:
+  hikari:
+    minimumIdle: 3
+    maximum-pool-size: 15
+    auto-commit: false
+    username: "postgres"
+    password: "root"
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres
+

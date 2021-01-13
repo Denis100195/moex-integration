@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/business-day-calendar-api/bussiness-day-calendar-api.iml" filepath="$PROJECT_DIR$/business-day-calendar-api/bussiness-day-calendar-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moex-integration/moex-integration.iml" filepath="$PROJECT_DIR$/moex-integration/moex-integration.iml" />
+    </modules>
+  </component>
+</project>

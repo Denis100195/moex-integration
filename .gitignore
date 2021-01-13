@@ -14,7 +14,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+business-day-calendar-api/src/main/java/org/businessday/api/.idea
 *.iws
 *.iml
 *.ipr

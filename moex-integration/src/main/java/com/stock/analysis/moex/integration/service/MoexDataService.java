@@ -1,6 +1,7 @@
 package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
+import com.stock.analysis.moex.integration.config.Constants;
 import com.stock.analysis.moex.integration.dto.Security;
 import com.stock.analysis.moex.integration.repository.SecurityRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -24,19 +25,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
+
 @Service
 @Slf4j
 public class MoexDataService {
 
-    final static String RUSSIA_CODE = "RUS"; //todo вынести в класс констант
     private BusinessCalendarClient businessCalendarClient;
     private SecurityRepository securityRepository;
     @Value("${moex.service.url}")
     private String moexServiceUrl;
 
     @Autowired
-    public MoexDataService(SecurityRepository securityRepository){
+    public MoexDataService(SecurityRepository securityRepository, BusinessCalendarClient businessCalendarClient){
         this.securityRepository = securityRepository;
+        this.businessCalendarClient = businessCalendarClient;
     }
 
     public List<Security> getSecuritiesOnDateFromMoex(LocalDate date) throws Exception {
@@ -88,11 +91,11 @@ public class MoexDataService {
     // 1. создать метод который на определенную дату сохраняет данные в базу на определенный день, предусм обработку ошибок
 
     @Transactional
-    @Scheduled(cron = "${cron}")
+    @Scheduled(cron = "${tue-sat-11-15}")
     public void saveSecuritiesOnPreviousWorkingDate() {
         try {
             log.info("Метод");
-            List<Security> sl = getSecuritiesOnDateFromMoex(LocalDate.now().minusDays(1));
+            List<Security> sl = getSecuritiesOnDateFromMoex(businessCalendarClient.getPreviousWorkingDate(LocalDate.now(), RUSSIA_CODE));
             for (int i = 0; i < sl.size(); i++) {
                 securityRepository.insRow(sl.get(i));
             }
@@ -108,7 +111,7 @@ public class MoexDataService {
             securityRepository.insRow(secOnDate.get(i));
         }
     }
-    @Scheduled(cron = "${cron}")
+    @Scheduled(cron = "${tue-sat-11-15}")
     public void addSecOnPrevWorkDay() throws Exception{
         LocalDate workDay = businessCalendarClient.getPreviousWorkingDate(LocalDate.now(), RUSSIA_CODE);
         saveSecuritiesOnDate(workDay);

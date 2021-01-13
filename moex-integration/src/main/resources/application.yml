@@ -1,16 +1,9 @@
-postgres:
-  hikari:
-    minimumIdle: 3
-    maximum-pool-size: 15
-    auto-commit: false
-    username: "postgres"
-    password: "root"
-    driver-class-name: org.postgresql.Driver
-    jdbc-url: jdbc:postgresql://localhost:5432/moex-int
+
+
 server:
   port : 8081
 
-cron: "0 11 15 * * TUE-SAT"
+tue-sat-11-15: "0 11 15 * * TUE-SAT"
 
 host: "http://localhost:8080"
 

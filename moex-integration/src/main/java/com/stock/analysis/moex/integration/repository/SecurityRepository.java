@@ -20,7 +20,7 @@ public class SecurityRepository {
     private final JdbcTemplate jdbcTemplate;
 
 
-    public SecurityRepository(final @Qualifier("hikariDS") DataSource dataSource) {
+    public SecurityRepository(final DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -32,8 +32,7 @@ public class SecurityRepository {
     private RowMapper<Security> securityRowMapper = (resultSet, i) ->
          new Security(
                 resultSet.getString("board_id"),
-                resultSet.getTimestamp("trade_date").toLocalDateTime().toLocalDate(),
-                resultSet.getString("short_name"),
+                resultSet.getTimestamp("trade_date").toLocalDateTime().toLocalDate(), resultSet.getString("short_name"),
                 resultSet.getString("sec_id"),
                 resultSet.getBigDecimal("num_trades"),
                 resultSet.getBigDecimal("value"),
