@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class SecurityRepository {
@@ -32,7 +33,8 @@ public class SecurityRepository {
     private RowMapper<Security> securityRowMapper = (resultSet, i) ->
          new Security(
                 resultSet.getString("board_id"),
-                resultSet.getTimestamp("trade_date").toLocalDateTime().toLocalDate(), resultSet.getString("short_name"),
+                resultSet.getTimestamp("trade_date").toLocalDateTime().toLocalDate(),
+                resultSet.getString("short_name"),
                 resultSet.getString("sec_id"),
                 resultSet.getBigDecimal("num_trades"),
                 resultSet.getBigDecimal("value"),
@@ -88,18 +90,12 @@ public class SecurityRepository {
         params[17] = security.getMarketPrice3TradeValue();
         params[18] = security.getAdmittedValue();
         params[19] = security.getWaval();
-
         return params;
     }
 
-
+    // через rowmapper
+    @Transactional
+    public List<>
 }
 
-/*прокси в спринге что это
-* @Transactional что это
-*
-*
-* 
-*
-* */
 

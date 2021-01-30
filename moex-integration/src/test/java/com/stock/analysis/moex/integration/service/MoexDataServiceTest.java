@@ -15,21 +15,20 @@ import java.util.List;
 @SpringBootTest
 @ActiveProfiles("dev")
 public class MoexDataServiceTest {
+
     @Autowired
     private MoexDataService moexDataService;
-    @org.junit.Test
-    public void testParseDoc() throws Exception {
-        List<Security> securityList = moexDataService.getSecuritiesOnDateFromMoex(LocalDate.of(2020, 3, 20));
-        System.out.println();
-    }
-    @org.junit.Test
-    public void testPutSecurity(){
-        Security security = Security.builder().boardId("mcd").build();
-        moexDataService.saveSecuritiesOnPreviousWorkingDate();
-    }
+//    private XmlParserService xmlParserService;
+
+//    public MoexDataServiceTest(MoexDataService moexDataService/*, XmlParserService xmlParserService*/){
+//        this.moexDataService = moexDataService;
+//        this.xmlParserService = xmlParserService;
+
+//    }
+//
     @org.junit.Test
     public void testReturnSecurity(){
-        List<Security> securityList = moexDataService.getSecurityDataOnDate(LocalDate.of(2020, 3, 20));
+        List<Security> securityList = moexDataService.getSecurityDataOnDate(LocalDate.of(2020, 12, 28));
         System.out.println(securityList);
     }
     @org.junit.Test
@@ -40,6 +39,15 @@ public class MoexDataServiceTest {
 
     @Test
     public void testSaveSecOnDate() throws Exception {
-        moexDataService.saveSecuritiesOnDate(LocalDate.of(2020,12,28));
+        moexDataService.saveSecuritiesOnDate(LocalDate.of(2020,12,29));
     }
+
+//    @Test
+//    public void testGetTopSecurityAtTime() throws Exception{
+//        functionService.getTopSecurityAtTime(
+//                LocalDate.of(2020, 12, 28),
+//                LocalDate.of(2020, 12, 29),
+//                10, true);
+//    }
+
 }

@@ -3,12 +3,16 @@ package com.stock.analysis.moex.integration.client;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class BusinessCalendarClient {
@@ -41,38 +45,27 @@ public class BusinessCalendarClient {
         ResponseEntity<Boolean> result = restTemplate.getForEntity(isDateWD, Boolean.class);
         return result.getBody();
     }
-    public void getWorkingDaysBetweenDates(LocalDate beginDate, LocalDate endDate, String country){
+    public Long getWorkingDaysBetweenDates(LocalDate beginDate, LocalDate endDate, String country){
         final String getWDBD = host + "/getWorkingDaysBetweenDates?" +
                 "BeginDate=" + beginDate.toString() +
                 "&EndDate=" + endDate.toString() +
                 "&Country=" + country;
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(getWDBD, String.class);
-        System.out.println(result);
-        Integer a = new Integer(122);
-        Integer b = new Integer(122);
-        Integer c = 127;
-        Integer d = 127;
-        //System.out.println(a == b);
-        //System.out.println(c == d);
-        String s = "a";
-        String s2 = "a";
-        String s3 = new String("ab").intern();
-        System.out.println(s == s2);
-        String s4 = "ab";
-        System.out.println(s3 == s4);
+        ResponseEntity <Long> result = restTemplate.getForEntity(getWDBD, Long.class);
+        return result.getBody();
+
     }
-    public void getListOfWDBetweenDates(LocalDate beginDate, LocalDate endDate, String country){
+    public List<LocalDate> getListOfWDBetweenDates(LocalDate beginDate, LocalDate endDate, String country){
         final String getListOfWDBD = host + "/getListOfWorkingDaysBetweenDates?" +
                 "BeginDate=" + beginDate.toString() +
                 "&EndDate=" + endDate.toString() +
                 "&Country=" + country;
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(getListOfWDBD, String.class);
-        System.out.println(result);
+        ResponseEntity <LocalDate[]> result = restTemplate.getForEntity(getListOfWDBD, LocalDate[].class);
+        return Arrays.asList(result.getBody());
     }
     public void addDaysToDate(LocalDate inDate, String country, boolean withHolidays, int count){
-        final String addDToD = host + "/addDaysToDate?" +
+        final String addDToD = host + "/addDaysToDate?" + 7 +
                 "InDate=" + inDate.toString() +
                 "&Country=" + country +
                 "&withHolidays=" + withHolidays +

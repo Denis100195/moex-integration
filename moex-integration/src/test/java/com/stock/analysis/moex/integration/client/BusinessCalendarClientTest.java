@@ -9,6 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
@@ -33,24 +35,27 @@ public class BusinessCalendarClientTest {
     }
     @Test
     public void isDateWorkingDateTest(){
-        businessCalendarClient.isDateWorkingDay(LocalDate.of(2020, 12, 25), RUSSIA_CODE);
+        Boolean dateWorkingDay = businessCalendarClient.isDateWorkingDay(LocalDate.of(2020, 12, 26), RUSSIA_CODE);
+        Assert.assertEquals(false, dateWorkingDay);
     }
 
     @Test
     public void getWorkingDaysBetweenDates(){
-        businessCalendarClient.getWorkingDaysBetweenDates(
-                LocalDate.of(2020, 11, 25),
-                LocalDate.of(2020, 12, 10),
+        Long workingDaysBetweenDates = businessCalendarClient.getWorkingDaysBetweenDates(
+                LocalDate.of(2020, 12, 9),
+                LocalDate.of(2020, 12, 11),
                 RUSSIA_CODE
         );
+        Assert.assertEquals(Long.valueOf(3), workingDaysBetweenDates);
     }
     @Test
     public void getListOfWDBetweenDatesTest(){
-        businessCalendarClient.getListOfWDBetweenDates(
+        List<LocalDate> listOfWDBetweenDates = businessCalendarClient.getListOfWDBetweenDates(
                 LocalDate.of(2020, 11, 25),
                 LocalDate.of(2020, 12, 10),
                 RUSSIA_CODE
         );
+        Assert.assertEquals(12, listOfWDBetweenDates.size());
     }
     @Test
     public void addDaysToDateTest(){
