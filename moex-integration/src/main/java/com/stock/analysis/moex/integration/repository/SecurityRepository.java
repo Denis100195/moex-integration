@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +21,9 @@ import java.util.Map;
 public class SecurityRepository {
     private final JdbcTemplate jdbcTemplate;
 
-
     public SecurityRepository(final DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
 
     private static final String SELECT_SECURITY_BY_DATE = "select * from security where trade_date = ?";
     private static final String INSERT_SECURITY_INTO_DB = "INSERT INTO security values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -60,6 +59,8 @@ public class SecurityRepository {
     }
     @Transactional
     public Security findOneSecurityByNameOnDate(LocalDate date, String name){
+        int[] f = {1, 4, 6, 2};
+        Arrays.sort(f);
         return jdbcTemplate.queryForObject(SELECT_ONE_SECURITY_BY_NAME_ON_DATE,securityRowMapper, date, name);
     }
 
@@ -92,10 +93,6 @@ public class SecurityRepository {
         params[19] = security.getWaval();
         return params;
     }
-
-    // через rowmapper
-    @Transactional
-    public List<>
 }
 
 

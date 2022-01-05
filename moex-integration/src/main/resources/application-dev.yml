@@ -4,7 +4,7 @@ postgres:
     maximum-pool-size: 15
     auto-commit: false
     username: "postgres"
-    password: "root"
+    password: "mypassword"
     driver-class-name: org.postgresql.Driver
-    jdbc-url: jdbc:postgresql://localhost:5432/postgres
+    jdbc-url: jdbc:postgresql://localhost:5432/test
 

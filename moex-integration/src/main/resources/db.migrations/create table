@@ -1,0 +1,22 @@
+create table if not exists security (
+    board_id varchar(20),
+    trade_date date,
+    short_name varchar (20),
+    sec_id varchar (20),
+    num_trades decimal,
+    value decimal,
+    open decimal,
+    low decimal,
+    high decimal,
+    legal_close_price decimal,
+    wa_price decimal,
+    close decimal,
+    volume decimal,
+    market_price_2 decimal,
+    market_price_3 decimal,
+    admitted_qoute decimal,
+    vmp_2_val_trd decimal,
+    market_price_3_trade_value decimal,
+    admitted_value decimal,
+    waval decimal
+);

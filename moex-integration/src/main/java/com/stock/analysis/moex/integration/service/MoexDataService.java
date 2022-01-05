@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MoexDataService {
     private XmlParserService xmlParserService;
-    private BusinessCalendarClient businessCalendarClient;
     private SecurityRepository securityRepository;
 
 

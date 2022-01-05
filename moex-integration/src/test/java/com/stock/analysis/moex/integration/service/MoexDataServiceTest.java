@@ -18,14 +18,7 @@ public class MoexDataServiceTest {
 
     @Autowired
     private MoexDataService moexDataService;
-//    private XmlParserService xmlParserService;
 
-//    public MoexDataServiceTest(MoexDataService moexDataService/*, XmlParserService xmlParserService*/){
-//        this.moexDataService = moexDataService;
-//        this.xmlParserService = xmlParserService;
-
-//    }
-//
     @org.junit.Test
     public void testReturnSecurity(){
         List<Security> securityList = moexDataService.getSecurityDataOnDate(LocalDate.of(2020, 12, 28));
@@ -41,13 +34,5 @@ public class MoexDataServiceTest {
     public void testSaveSecOnDate() throws Exception {
         moexDataService.saveSecuritiesOnDate(LocalDate.of(2020,12,29));
     }
-
-//    @Test
-//    public void testGetTopSecurityAtTime() throws Exception{
-//        functionService.getTopSecurityAtTime(
-//                LocalDate.of(2020, 12, 28),
-//                LocalDate.of(2020, 12, 29),
-//                10, true);
-//    }
 
 }
