@@ -1,0 +1,8 @@
+server:
+  port : 8081
+
+rates.loader.cron: "0 38 17 * * TUE-SAT"
+
+host: "http://localhost:8080"
+
+moex.service.url: "http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.xml?date="

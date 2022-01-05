@@ -1,0 +1,5 @@
+select s1.sec_id, s1.short_name, ((s2.close/s1.close-1)*100) dif from security s1
+inner join security s2 on s1.sec_id=s2.sec_id
+    where s1.trade_date='2020-12-28' and s2.trade_date='2020-12-29' and s1.close is not null and  s2.close is not null
+    order by dif desc
+    limit 20;

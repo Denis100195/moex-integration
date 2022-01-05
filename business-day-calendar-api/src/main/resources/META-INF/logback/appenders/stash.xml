@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="LOGSTASH_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <mdc>
+                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
+                </mdc>
+                <logLevel />
+                <loggerName />
+                <threadName />
+                <message />
+                <logstashMarkers />
+                <arguments />
+
+                <stackTrace>
+                    <fieldName>stackTrace</fieldName>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <inlineHash>true</inlineHash>
+                        <exclusions>${STE_EXCLUSIONS}</exclusions>
+                    </throwableConverter>
+                </stackTrace>
+                <stackHash>
+                    <exclusions>${STE_EXCLUSIONS}</exclusions>
+                </stackHash>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+        <reconnectionDelay>10 second</reconnectionDelay>
+        <waitStrategyType>blocking</waitStrategyType>
+        <ringBufferSize>16384</ringBufferSize>
+        <destination>${LOGSTASH_DESTINATION}</destination>
+        <connectionStrategy>
+            <preferPrimary>
+                <secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>
+            </preferPrimary>
+        </connectionStrategy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <mdc>
+                    <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+                    <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
+                </mdc>
+                <logLevel />
+                <loggerName />
+                <threadName />
+                <message />
+                <logstashMarkers />
+                <arguments />
+
+                <stackTrace>
+                    <fieldName>stackTrace</fieldName>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <inlineHash>true</inlineHash>
+                        <exclusions>${STE_EXCLUSIONS}</exclusions>
+                    </throwableConverter>
+                </stackTrace>
+                <stackHash>
+                    <exclusions>${STE_EXCLUSIONS}</exclusions>
+                </stackHash>
+                <pattern>
+                    <pattern>
+                        {
+                        "serviceName": "${SERVICE_NAME:-${APPLICATION_NAME}}",
+                        "applicationName": "${APPLICATION_NAME}",
+                        "applicationVersion": "${APPLICATION_VERSION}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+</included>
