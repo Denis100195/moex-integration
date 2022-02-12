@@ -1,7 +1,7 @@
 server:
   port : 8081
 
-rates.loader.cron: "0 38 17 * * TUE-SAT"
+rates.loader.cron: "0 53 22 * * TUE-SAT"
 
 host: "http://localhost:8080"
 
