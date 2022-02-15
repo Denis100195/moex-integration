@@ -1,8 +1,7 @@
 package com.stock.analysis.moex.integration.service;
 
-import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
 import com.stock.analysis.moex.integration.dto.Security;
-import com.stock.analysis.moex.integration.repository.SecurityRepository;
+import com.stock.analysis.moex.integration.repository.SecurityRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,24 +16,24 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MoexDataService {
     private XmlParserService xmlParserService;
-    private SecurityRepository securityRepository;
+    private SecurityRepositoryImpl securityRepositoryImpl;
 
 
     @Autowired
-    public MoexDataService(SecurityRepository securityRepository, XmlParserService xmlParserService){
-        this.securityRepository = securityRepository;
+    public MoexDataService(SecurityRepositoryImpl securityRepositoryImpl, XmlParserService xmlParserService){
+        this.securityRepositoryImpl = securityRepositoryImpl;
         this.xmlParserService = xmlParserService;
     }
     //метод, который сохраняет данные с сайта в базу на дату, переданную в параметры
     public void saveSecuritiesOnDate(LocalDate date) throws Exception{
         List<Security> secOnDate = xmlParserService.getSecuritiesOnDateFromMoex(date);
         for (int i = 0; i < secOnDate.size(); i++) {
-            securityRepository.insRow(secOnDate.get(i));
+            securityRepositoryImpl.insRow(secOnDate.get(i));
         }
     }
     //метод котор возращает даннные из базы на определенную дату
     public List<Security> getSecurityDataOnDate(LocalDate date) {
-        return securityRepository.findAllSecurityDataByDate(date);
+        return securityRepositoryImpl.findAllSecurityDataByDate(date);
     }
     //топ 10 бумаг с максимальным объемом, у которых цена (high) больше 200. с использ стримов
     public List<Security> getTopSecurity(final LocalDate date){
@@ -47,7 +46,7 @@ public class MoexDataService {
     }
     //метод который возвращает данные по одной бумаге
     public Security getOneSecurityByNameOnDate(LocalDate date, String shName) {
-        Security sec = securityRepository.findOneSecurityByNameOnDate(date, shName);
+        Security sec = securityRepositoryImpl.findOneSecurityByNameOnDate(date, shName);
         return sec;
     }
 }

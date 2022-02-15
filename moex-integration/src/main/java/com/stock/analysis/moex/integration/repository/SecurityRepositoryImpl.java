@@ -1,5 +1,6 @@
 package com.stock.analysis.moex.integration.repository;
 
+import com.stock.analysis.moex.integration.domain.SecurityRepository;
 import com.stock.analysis.moex.integration.dto.Security;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class SecurityRepository {
+public class SecurityRepositoryImpl implements SecurityRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public SecurityRepository(final DataSource dataSource) {
+    public SecurityRepositoryImpl(final DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

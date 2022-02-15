@@ -2,7 +2,7 @@ package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
 import com.stock.analysis.moex.integration.dto.SecurityPriceDifference;
-import com.stock.analysis.moex.integration.repository.SecurityRepository;
+import com.stock.analysis.moex.integration.repository.SecurityRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +21,7 @@ import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
 public class SecurityAnalyticsService {
     private BusinessCalendarClient businessCalendarClient;
     private MoexDataService moexDataService;
-    private SecurityRepository securityRepository;
+    private SecurityRepositoryImpl securityRepositoryImpl;
     private final JdbcTemplate jdbcTemplate;
 
     private static final String ORDER_SECURITY_BY_PRICE_DIFFERENCE_test =
@@ -43,10 +43,10 @@ public class SecurityAnalyticsService {
 
     @Autowired
     public SecurityAnalyticsService(
-            BusinessCalendarClient businessCalendarClient, MoexDataService moexDataService, SecurityRepository securityRepository, DataSource dataSource){
+            BusinessCalendarClient businessCalendarClient, MoexDataService moexDataService, SecurityRepositoryImpl securityRepositoryImpl, DataSource dataSource){
         this.businessCalendarClient = businessCalendarClient;
         this.moexDataService = moexDataService;
-        this.securityRepository = securityRepository;
+        this.securityRepositoryImpl = securityRepositoryImpl;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     //метод сохраняет даныые в БД за предыдущий рабочий день по расписанию
