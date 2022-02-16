@@ -13,10 +13,10 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles("dev")
-public class SecurityAnalyticsServiceTest {
+public class SecurityAnalyticsServiceImplTest {
 
     @Autowired
-    private SecurityAnalyticsService securityAnalyticsService;
+    private SecurityAnalyticsServiceImpl securityAnalyticsServiceImpl;
 
     @org.junit.Test
     public void addSecOnPrevWorkDay() {
@@ -24,7 +24,7 @@ public class SecurityAnalyticsServiceTest {
 
     @org.junit.Test
     public void getTopSecurityAtTimeTest() throws Exception {
-        List<SecurityPriceDifference> topSecurityAtTime = securityAnalyticsService.getTopSecurityAtTime
+        List<SecurityPriceDifference> topSecurityAtTime = securityAnalyticsServiceImpl.getTopSecurityAtTime
                 (LocalDate.of(2020, 12, 28), LocalDate.of(2020, 12, 29), 10, true);
         System.out.println(topSecurityAtTime);
 

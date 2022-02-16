@@ -1,5 +1,6 @@
 package com.stock.analysis.moex.integration.service;
 
+import com.stock.analysis.moex.integration.domain.service.XmlParserService;
 import com.stock.analysis.moex.integration.dto.Security;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class XmlParserService {
+public class XmlParserServiceImpl implements XmlParserService {
 
     @Value("${moex.service.url}")
     private String moexServiceUrl;

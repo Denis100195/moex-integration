@@ -1,6 +1,7 @@
 package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
+import com.stock.analysis.moex.integration.domain.service.SecurityAnalyticsService;
 import com.stock.analysis.moex.integration.dto.SecurityPriceDifference;
 import com.stock.analysis.moex.integration.repository.SecurityRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,9 @@ import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
 
 @Service
 @Slf4j
-public class SecurityAnalyticsService {
+public class SecurityAnalyticsServiceImpl implements SecurityAnalyticsService {
     private BusinessCalendarClient businessCalendarClient;
-    private MoexDataService moexDataService;
+    private MoexDataServiceImpl moexDataServiceImpl;
     private SecurityRepositoryImpl securityRepositoryImpl;
     private final JdbcTemplate jdbcTemplate;
 
@@ -42,10 +43,10 @@ public class SecurityAnalyticsService {
             );
 
     @Autowired
-    public SecurityAnalyticsService(
-            BusinessCalendarClient businessCalendarClient, MoexDataService moexDataService, SecurityRepositoryImpl securityRepositoryImpl, DataSource dataSource){
+    public SecurityAnalyticsServiceImpl(
+            BusinessCalendarClient businessCalendarClient, MoexDataServiceImpl moexDataServiceImpl, SecurityRepositoryImpl securityRepositoryImpl, DataSource dataSource){
         this.businessCalendarClient = businessCalendarClient;
-        this.moexDataService = moexDataService;
+        this.moexDataServiceImpl = moexDataServiceImpl;
         this.securityRepositoryImpl = securityRepositoryImpl;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -53,7 +54,7 @@ public class SecurityAnalyticsService {
     @Scheduled(cron = "${rates.loader.cron}")
     public void addSecOnPrevWorkDay() throws Exception{
         LocalDate workDay = businessCalendarClient.getPreviousWorkingDate(LocalDate.now(), RUSSIA_CODE);
-        moexDataService.saveSecuritiesOnDate(workDay);
+        moexDataServiceImpl.saveSecuritiesOnDate(workDay);
         log.info("Security was added into database");
 
     }

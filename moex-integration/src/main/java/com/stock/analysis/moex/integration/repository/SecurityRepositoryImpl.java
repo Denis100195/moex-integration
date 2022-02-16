@@ -1,22 +1,16 @@
 package com.stock.analysis.moex.integration.repository;
 
-import com.stock.analysis.moex.integration.domain.SecurityRepository;
+import com.stock.analysis.moex.integration.domain.repository.SecurityRepository;
 import com.stock.analysis.moex.integration.dto.Security;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class SecurityRepositoryImpl implements SecurityRepository {
@@ -54,18 +48,15 @@ public class SecurityRepositoryImpl implements SecurityRepository {
                 resultSet.getBigDecimal("waval"));
 
 
-    @Transactional
     public List<Security> findAllSecurityDataByDate(LocalDate date){
         return jdbcTemplate.query(SELECT_SECURITY_BY_DATE, securityRowMapper, date);
     }
-    @Transactional
+
     public Security findOneSecurityByNameOnDate(LocalDate date, String name){
-        int[] f = {1, 4, 6, 2};
-        Arrays.sort(f);
+
         return jdbcTemplate.queryForObject(SELECT_ONE_SECURITY_BY_NAME_ON_DATE,securityRowMapper, date, name);
     }
 
-    @Transactional
     public void insRow(Security security){
         jdbcTemplate.update(INSERT_SECURITY_INTO_DB, getParams(security));
     }
