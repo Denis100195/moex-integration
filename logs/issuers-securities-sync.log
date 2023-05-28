@@ -1,0 +1,58 @@
+2023-05-28 17:10:54,339 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$419e3f38] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:10:55,644 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - The following profiles are active: dev
+2023-05-28 17:10:56,286 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=08d6a3f9-94c9-3c5f-bed1-6c84c1ca890c
+2023-05-28 17:10:56,517 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$419e3f38] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:10:56,745 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-05-28 17:10:56,752 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:10:56,753 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-05-28 17:10:56,753 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.31]
+2023-05-28 17:10:56,842 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-05-28 17:10:56,842 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1187 ms
+2023-05-28 17:10:57,821 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2023-05-28 17:10:58,174 [main] INFO  o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2023-05-28 17:10:59,445 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2023-05-28 17:10:59,733 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2023-05-28 17:10:59,816 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:10:59,832 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-05-28 17:10:59,833 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - Started MoexIntegrationApplication in 7.263 seconds (JVM running for 8.001)
+2023-05-28 17:11:26,289 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$9ecef0e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:11:27,610 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - The following profiles are active: dev
+2023-05-28 17:11:28,268 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=08d6a3f9-94c9-3c5f-bed1-6c84c1ca890c
+2023-05-28 17:11:28,503 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$9ecef0e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:11:28,739 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-05-28 17:11:28,746 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:11:28,746 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-05-28 17:11:28,746 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.31]
+2023-05-28 17:11:28,838 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-05-28 17:11:28,838 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1216 ms
+2023-05-28 17:11:29,831 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2023-05-28 17:11:30,208 [main] INFO  o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2023-05-28 17:11:31,465 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2023-05-28 17:11:31,774 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2023-05-28 17:11:31,861 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:11:31,877 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-05-28 17:11:31,878 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - Started MoexIntegrationApplication in 7.342 seconds (JVM running for 8.095)
+2023-05-28 17:12:00,073 [scheduling-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-05-28 17:12:00,468 [scheduling-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-05-28 17:12:00,595 [scheduling-1] INFO  c.s.a.m.i.s.SecurityAnalyticsServiceImpl - Security was added into database
+2023-05-28 17:12:00,597 [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2023-05-28 17:12:00,599 [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2023-05-28 17:12:01,615 [SpringContextShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-05-28 17:12:01,618 [SpringContextShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-05-28 17:45:57,135 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$4f42f826] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:45:58,451 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - The following profiles are active: dev
+2023-05-28 17:45:59,090 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=08d6a3f9-94c9-3c5f-bed1-6c84c1ca890c
+2023-05-28 17:45:59,318 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$4f42f826] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-05-28 17:45:59,544 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-05-28 17:45:59,552 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:45:59,553 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-05-28 17:45:59,553 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.31]
+2023-05-28 17:45:59,639 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-05-28 17:45:59,639 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1177 ms
+2023-05-28 17:46:00,628 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2023-05-28 17:46:01,009 [main] INFO  o.s.s.c.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2023-05-28 17:46:02,281 [main] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2023-05-28 17:46:02,576 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2023-05-28 17:46:02,659 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-05-28 17:46:02,675 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-05-28 17:46:02,676 [main] INFO  c.s.a.m.i.MoexIntegrationApplication - Started MoexIntegrationApplication in 7.287 seconds (JVM running for 8.099)

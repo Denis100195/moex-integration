@@ -2,6 +2,7 @@ package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.client.BusinessCalendarClient;
 import com.stock.analysis.moex.integration.domain.service.SecurityAnalyticsService;
+import com.stock.analysis.moex.integration.dto.Security;
 import com.stock.analysis.moex.integration.dto.SecurityPriceDifference;
 import com.stock.analysis.moex.integration.repository.SecurityRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
 
@@ -54,6 +56,7 @@ public class SecurityAnalyticsServiceImpl implements SecurityAnalyticsService {
     @Scheduled(cron = "${rates.loader.cron}")
     public void addSecOnPrevWorkDay() throws Exception{
         LocalDate workDay = businessCalendarClient.getPreviousWorkingDate(LocalDate.now(), RUSSIA_CODE);
+
         moexDataServiceImpl.saveSecuritiesOnDate(workDay);
         log.info("Security was added into database");
 
@@ -66,6 +69,21 @@ public class SecurityAnalyticsServiceImpl implements SecurityAnalyticsService {
 
         return query;
         //return jdbcTemplate.query(ORDER_SECURITY_BY_PRICE_DIFFERENCE_test, securityPriceDifferenceRowMapper, beginDate, endDate, topCount, isIncrease);
+
+    }
+
+    //группировка по num_trades
+    public Map<Integer, List<Security>> getOrderedSecOnNmTr(){
+        List<Security> myList = securityRepositoryImpl.findAllSecurityData();
+        Map<Integer, List<Security>> groupByNumTr =
+                myList
+                        .stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        sec -> sec.getNumTrades().intValue()
+                                )
+                        );
+        return groupByNumTr;
 
     }
 }

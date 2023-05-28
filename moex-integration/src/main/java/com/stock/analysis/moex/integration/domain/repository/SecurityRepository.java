@@ -10,6 +10,8 @@ public interface SecurityRepository {
 
     public void insRow(Security security);
 
+    public List<Security> findAllSecurityData();
+
     public List<Security> findAllSecurityDataByDate(LocalDate date);
 
     public Security findOneSecurityByNameOnDate(LocalDate date, String name);
