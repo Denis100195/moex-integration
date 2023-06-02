@@ -9,10 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static com.stock.analysis.moex.integration.config.Constants.RUSSIA_CODE;
 
 @RunWith(SpringJUnit4ClassRunner.class)

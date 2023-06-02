@@ -1,21 +1,15 @@
 package com.stock.analysis.moex.integration.repository;
 
-import com.stock.analysis.moex.integration.dto.Security;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class SecurityRepositoryTest {
+public class SecurityRepositoryImplTest {
     @Autowired
-    private SecurityRepository securityRepository;
+    private SecurityRepositoryImpl securityRepositoryImpl;
 
 //    @Test
 //    public void testGetRows() {

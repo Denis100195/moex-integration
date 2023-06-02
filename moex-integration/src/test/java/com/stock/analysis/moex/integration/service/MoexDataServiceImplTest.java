@@ -1,6 +1,7 @@
 package com.stock.analysis.moex.integration.service;
 
 import com.stock.analysis.moex.integration.dto.Security;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,29 +11,41 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles("dev")
-public class MoexDataServiceTest {
+@Slf4j
+public class MoexDataServiceImplTest {
 
     @Autowired
-    private MoexDataService moexDataService;
+    private MoexDataServiceImpl moexDataServiceImpl;
 
     @org.junit.Test
     public void testReturnSecurity(){
-        List<Security> securityList = moexDataService.getSecurityDataOnDate(LocalDate.of(2020, 12, 28));
+        List<Security> securityList = moexDataServiceImpl.getSecurityDataOnDate(LocalDate.of(2020, 12, 28));
         System.out.println(securityList);
     }
     @org.junit.Test
     public void testReturnOneSec(){
-        Security oneSec = moexDataService.getOneSecurityByNameOnDate(LocalDate.of(2020,3,20), "AFLT");
+        Security oneSec = moexDataServiceImpl.getOneSecurityByNameOnDate(LocalDate.of(2020,3,20), "AFLT");
         System.out.println(oneSec.toString());
     }
 
     @Test
     public void testSaveSecOnDate() throws Exception {
-        moexDataService.saveSecuritiesOnDate(LocalDate.of(2020,12,29));
+        moexDataServiceImpl.saveSecuritiesOnDate(LocalDate.of(2020,12,29));
+    }
+
+    @Test
+    public void getSecOnDateCloseNotNull (){
+        List<Security> secList = moexDataServiceImpl.getSecurityDataOnDate(LocalDate.of(2022, 2,11));
+        Set<Security> secSet = secList.stream()
+                .filter(security -> security.getClose() != null)
+                .collect(Collectors.toSet());
+        log.info(secList.toString());
     }
 
 }

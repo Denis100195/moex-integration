@@ -24,7 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <lombok.version>1.18.4</lombok.version>
-        <gson>2.8.5</gson>
+        <gson>2.8.9</gson>
 
     </properties>
 

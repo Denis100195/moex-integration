@@ -2,8 +2,8 @@ package com.stock.analysis.moex.integration.controller;
 
 import com.stock.analysis.moex.integration.dto.Security;
 import com.stock.analysis.moex.integration.dto.SecurityPriceDifference;
-import com.stock.analysis.moex.integration.service.MoexDataService;
-import com.stock.analysis.moex.integration.service.SecurityAnalyticsService;
+import com.stock.analysis.moex.integration.service.MoexDataServiceImpl;
+import com.stock.analysis.moex.integration.service.SecurityAnalyticsServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,23 +14,23 @@ import java.util.List;
 @RestController
 public class MoexController {
 
-    private final MoexDataService moexDataService;
-    private final SecurityAnalyticsService securityAnalyticsService;
+    private final MoexDataServiceImpl moexDataServiceImpl;
+    private final SecurityAnalyticsServiceImpl securityAnalyticsServiceImpl;
 
-    public MoexController(MoexDataService moexDataService, SecurityAnalyticsService securityAnalyticsService){
-        this.moexDataService = moexDataService;
-        this.securityAnalyticsService = securityAnalyticsService;
+    public MoexController(MoexDataServiceImpl moexDataServiceImpl, SecurityAnalyticsServiceImpl securityAnalyticsServiceImpl){
+        this.moexDataServiceImpl = moexDataServiceImpl;
+        this.securityAnalyticsServiceImpl = securityAnalyticsServiceImpl;
     }
 
     @GetMapping(value = "/security")
     public List<Security> getAllSecOnDate (@RequestParam(name = "date")String date){
-        return moexDataService.getSecurityDataOnDate(LocalDate.parse(date));
+        return moexDataServiceImpl.getSecurityDataOnDate(LocalDate.parse(date));
     }
 
     @GetMapping(value = "/getOneSecByNameOnDate")
     public Security getOneSecByNameOnDate(@RequestParam(name = "date")String date,
                                           @RequestParam(name = "secName")String secName){
-        return moexDataService.getOneSecurityByNameOnDate(LocalDate.parse(date), secName);
+        return moexDataServiceImpl.getOneSecurityByNameOnDate(LocalDate.parse(date), secName);
     }
 
     @GetMapping(value = "/topSecuritiesAtTime")
@@ -38,6 +38,6 @@ public class MoexController {
                                                                      @RequestParam(name = "endDate") String endDate,
                                                                      @RequestParam(name = "count") int count,
                                                                      @RequestParam(name = "isIncrease") boolean isIncrease){
-        return securityAnalyticsService.getTopSecurityAtTime(LocalDate.parse(beginDate), LocalDate.parse(endDate), count, isIncrease);
+        return securityAnalyticsServiceImpl.getTopSecurityAtTime(LocalDate.parse(beginDate), LocalDate.parse(endDate), count, isIncrease);
     }
 }
